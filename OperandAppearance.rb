@@ -18,8 +18,14 @@ end
 open(filePath) do |f|
 
   f.each_with_index do |line, index|
-    lineNum += 1
-    operand = 0
+    ### import文の部分は飛ばす．
+    ### ただし，全行数にはカウントする．
+    if line =~ /^import/
+      lineNum += 1
+      next
+    end
+    lineNum += 1  # 
+    operand = 0   # 演算子の数を格納する変数
 #    p index
     parseLine(line).each do |item|    # 英数字とか削除した後の各要素
       if item =~ /(\+\+)|(--)|(\+)|(-)|(\*)|(\/)|(%)|(\^)/ && !(item =~ /(\+=)|(-=)|(\*=)|(\/=)|(\^=)/)
